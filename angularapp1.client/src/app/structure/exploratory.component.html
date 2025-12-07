@@ -1,0 +1,32 @@
+<div>
+  <button type="button" class="btn btn-primary" (click)="get_exploratory_columns()">Get Exploratory Columns</button>
+  <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
+  <table class="table table-bordered" style="margin-top: 10px">
+    <tr>
+      <th *ngFor="let c of columnTypes">
+        {{c.column}}
+      </th>
+    </tr>
+    <tr>
+      <td *ngFor="let c of columnTypes">
+        {{c.type}}
+      </td>
+    </tr>
+  </table>
+  {{corr_image_url}}
+  <img src={{corr_image_url}} />
+
+  <!-- <button type="button" class="btn btn-primary" (click)="get_mlr_stats()">Get MLR Stats</button> -->
+</div>
+<div class="row">
+  <div class="col col-lg-6">
+    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/corr" plotTitle="Correlation Plot"></plot-frame>
+  </div>
+
+  <div class="col col-lg-6">
+    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/CO1_PEK/CO1_NEC" plotTitle="Relationship CO1_NEC and CO1_PEK"></plot-frame>
+    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/UPV_COD/CO1_NEC" plotTitle="Relationship UPV_NEC and UPV_COD"></plot-frame>
+  </div>
+
+</div>
+

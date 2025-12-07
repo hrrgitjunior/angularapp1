@@ -1,0 +1,22 @@
+<div>
+  <button type="button" class="btn btn-primary" (click)="get_regression_stat()">Get Regression Statistics</button>
+  <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
+  <table class="table table-bordered" *ngIf = "mlrStats.coeficients?.length" style = "margin-top:20px" >
+    <tr>
+      <th> Intercept </th>
+      <th *ngFor="let c of mlrStats.coeficients">
+        {{c.independ}}
+      </th>
+      <th> R square </th>
+      <th> Min square error </th>
+    </tr>
+    <tr>
+      <td>{{mlrStats.intercept}}</td>
+      <td *ngFor="let c of mlrStats.coeficients">
+        {{c.value}}
+      </td>
+      <td>{{mlrStats.r_square}}</td>
+      <td>{{mlrStats.mean_square_error}}</td>
+    </tr>
+  </table>
+</div>

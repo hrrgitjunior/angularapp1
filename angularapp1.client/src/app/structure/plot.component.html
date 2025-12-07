@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="card-header">
+    {{plotTitle}}
+  </div>
+  <div class="card-body">
+    <div *ngIf="!isLoadedPlot" class="loader" style="margin: auto"></div>
+    <img *ngIf="enableViewPlot" src={{plotUrl}} (load)="onImageLoad()" style="width:500px; height:500px" />
+    <button *ngIf="!enableViewPlot" (click)="enable_view_plot()" class="btn btn-primary">View</button>
+  </div>
+</div>
