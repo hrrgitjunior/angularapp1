@@ -40,17 +40,11 @@ export class AnalysisLayoutComponent {
   ngOnInit() {
     console.log("analysis init");
   //  this.repo.get_dt_columns();
-
   }
 
   initPython(): void {
     console.log("=== GET DT COLUMNS ===");
     this.repo.get_dt_columns();
-  }
-
-  get columnsType(): any {
-    console.log("=== GET COLUNS TYPE ==="); ''
-    return this.repo.columnsType
   }
 
   public create_table(): void {
@@ -111,6 +105,7 @@ export class AnalysisLayoutComponent {
 
   upload() {
     console.log("==== upload click ====");
+    this.repo.isLoaded = false;
     this.isLoadCorr = true;
     //this.router.navigateByUrl("/api/upload");
   }
@@ -127,6 +122,18 @@ export class AnalysisLayoutComponent {
       });
   }
 
+  download_plot(): void {
+    this.repo.download_plot();
+  }
+
+  get isLoaded(): boolean {
+    return this.repo.isLoaded;
+  }
+
+  onImageLoad(): void {
+    console.log("ON IMGAE LOAD");
+    this.repo.isLoaded = true;
+  }
 
 
 }

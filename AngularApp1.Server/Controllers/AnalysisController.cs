@@ -84,5 +84,14 @@ namespace AngularApp1.Server.Controllers
             return Ok(new { tableColumns = repositories });
         }
 
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<IActionResult> MLRegressionStats()
+        {
+             using HttpClient client = new();
+             var regrStat = await client.GetFromJsonAsync<object>("https://severe-regular-fun.anvil.app/regr_stat");
+             return Ok(regrStat);
+        }
+
     }// class
  } // namespace3

@@ -6,16 +6,21 @@ import { HttpClient, HttpRequest, HttpEvent, HttpResponse } from '@angular/commo
 @Injectable()
 export class Repository {
   tableColumns: any;
-  columnsType: any;
+  columnTypes: any;
   corr_image_url: string = "";
+  isLoaded: boolean = true;
+  imgUrl: any;
+  mlrStats: any;
 
   constructor(private http: HttpClient) {
   }
 
   get_dt_columns() {
+    this.isLoaded = false; 
     this.http
       .post('/api/analysis/GetDTColumns', {}, {})
       .subscribe((resp: any) => {
+        this.isLoaded = true;
         this.tableColumns = resp.tableColumns;
         console.log("==== repository tableColumns ===", this.tableColumns);
       }, (error) => {
@@ -24,15 +29,41 @@ export class Repository {
   }
 
   exploratory_get_columns() {
+    this.isLoaded = false;
     this.http
-      .post('/api/analysis/ExploratoryColumns', {}, {})
+      .post('/api/exploratory/ExploratoryColumns', {}, {})
       .subscribe((resp: any) => {
-        this.columnsType = resp.columnsType;
-        this.corr_image_url = resp.corr_image_url;
-        console.log("==== repository tableColumns ===", resp.columnsType);
-        console.log("==== repository corr_image_url ===", resp.corr_image_url);
+        this.isLoaded = true;
+        this.columnTypes = resp;
+        console.log("==== repository columnTypes ===", resp.columnTypes);
       }, (error) => {
         // Handle error
       });
   }
+
+  get_regression_statistics() {
+    this.isLoaded = false; 
+    this.http
+      .post('/api/analysis/MLRegressionStats', {}, {})
+        .subscribe((resp: any) => {
+        this.isLoaded = true;
+        this.mlrStats = resp;
+        console.log("==== repository mlrStats ===", resp.mlrStats);
+      }, (error) => {
+        // Handle error
+      });
+  }
+
+  //TO DO
+  download_plot() {
+    this.http
+      .post('/api/exploratory/DownloadPlot', {}, {})
+      .subscribe((resp: any) => {
+        this.imgUrl = resp.imgUrl;
+      }, (error) => {
+        // Handle error
+      });
+  }
+
+  
 }
