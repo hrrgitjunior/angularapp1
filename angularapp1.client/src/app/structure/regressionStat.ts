@@ -30,7 +30,6 @@ export class RegressionStatComponent {
   }
 
   get mlrStats(): any {
-    console.log(">>>>>>", this.repo.mlrStats.coeficients[0])
     return this.repo.mlrStats;
   }
 

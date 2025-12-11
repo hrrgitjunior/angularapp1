@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgModule } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpResponse } from '@angular/common/http';
-//import 'datatables.net-dt';
 import { Repository } from "../models/repository";
 declare var $: any;
 
@@ -29,9 +28,10 @@ export class AnalysisLayoutComponent {
   analysisdata: any = null;
   columns: any;
   isLoadCorr: boolean = false;
+ // DataTable = require('datatables.net');
   //dtOptions: DataTables.Settings = {};
   constructor(
-    private repo: Repository,
+    public repo: Repository,
     private _route: ActivatedRoute,
     private router: Router,
     private http: HttpClient) {
@@ -43,62 +43,65 @@ export class AnalysisLayoutComponent {
   }
 
   initPython(): void {
-    console.log("=== GET DT COLUMNS ===");
     this.repo.get_dt_columns();
   }
 
   public create_table(): void {
     let that = this;
-    this.dTable = $('#analysTable');
-    this.hTable = this.dTable.DataTable({
-      layout: {
-        topStart: 'pageLength',
-        topEnd: 'search',
-        bottomStart: 'info',
-        bottomEnd: 'paging',
-        /*  bottom: [
-            'pageLength',
-            'info'
-          ]*/
-      },
-      pagingType: 'numbers',
-      pageLength: 5,
-      serverSide: true,
-      processing: true,
-      columnDefs: [{
-        'targets': 0,
-        'searcheble': true,
-        'orderable': false,
-        'className': 'dt-body-center'
-      }],
-      ajax: (dataTablesParameters: any, callback: any) => {
-        dataTablesParameters.filter = { field: "week", value: 10 };
-        console.log("AJAX PARAMS ===", dataTablesParameters);
-        that.http
-          .post<any>('/api/analysis', dataTablesParameters, {})
-          .subscribe(resp => {
-            that.analysisdata = resp.test;
-            this.columns = this.repo.tableColumns;
-            console.log("+++++++", this.columns = this.repo.tableColumns)
-            console.log("======", resp.data)
+    if (this.hTable) {
+      alert("The data has been loaded already.")
+    } else {
+      this.dTable = $('#analysTable');
+      this.hTable = this.dTable.DataTable({
+        layout: {
+          topStart: 'pageLength',
+          topEnd: 'search',
+          bottomStart: 'info',
+          bottomEnd: 'paging',
+          /*  bottom: [
+              'pageLength',
+              'info'
+            ]*/
+        },
+        pagingType: 'numbers',
+        pageLength: 5,
+        serverSide: true,
+        processing: true,
+        columnDefs: [{
+          'targets': 0,
+          'searcheble': true,
+          'orderable': false,
+          'className': 'dt-body-center'
+        }],
+        ajax: (dataTablesParameters: any, callback: any) => {
+          dataTablesParameters.filter = { field: "week", value: 10 };
+          console.log("AJAX PARAMS ===", dataTablesParameters);
+          that.http
+            .post<any>('/api/analysis', dataTablesParameters, {})
+            .subscribe(resp => {
+              that.analysisdata = resp.test;
+              this.columns = this.repo.tableColumns;
 
-            callback({
-              recordsTotal: resp.rowNumber,
-              //resp.recordsTotal, => from analysiscontroller
-              recordsFiltered: resp.rowNumber, //=> from analysiscontroller
-              //                resp.recordsFiltered,
-              data: resp.data,
-              columns: this.repo.tableColumns
+              callback({
+                recordsTotal: resp.rowNumber,
+                //resp.recordsTotal, => from analysiscontroller
+                recordsFiltered: resp.rowNumber, //=> from analysiscontroller
+                //                resp.recordsFiltered,
+                data: resp.data,
+                columns: this.repo.tableColumns
+              });
             });
-          });
-      },
+        },
 
-      responsive: true,
-      //columns: dataanalys_columns,
-      columns: this.repo.tableColumns,
-      data: this.analysisdata
+        responsive: true,
+        //columns: dataanalys_columns,
+        columns: this.repo.tableColumns,
+        data: this.analysisdata
 
-    });
+      });
+    }
+
+  
     console.log("analysis after init", this.hTable);
 
   }
@@ -111,7 +114,6 @@ export class AnalysisLayoutComponent {
   }
 
   exploratory() {
-    console.log("==== exploratory ====");
     let that = this;
     this.http
       .post('/api/analysis/ExploratoryColumns', {}, {})
@@ -130,8 +132,11 @@ export class AnalysisLayoutComponent {
     return this.repo.isLoaded;
   }
 
+  get isPythonInit(): boolean {
+    return this.repo.isPythonInit = true;
+  }
+
   onImageLoad(): void {
-    console.log("ON IMGAE LOAD");
     this.repo.isLoaded = true;
   }
 

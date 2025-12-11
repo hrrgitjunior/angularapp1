@@ -11,6 +11,7 @@ export class Repository {
   isLoaded: boolean = true;
   imgUrl: any;
   mlrStats: any;
+  isPythonInit: boolean = false;
 
   constructor(private http: HttpClient) {
   }
@@ -22,7 +23,7 @@ export class Repository {
       .subscribe((resp: any) => {
         this.isLoaded = true;
         this.tableColumns = resp.tableColumns;
-        console.log("==== repository tableColumns ===", this.tableColumns);
+        this.isPythonInit = true;
       }, (error) => {
         // Handle error
       });
@@ -35,7 +36,6 @@ export class Repository {
       .subscribe((resp: any) => {
         this.isLoaded = true;
         this.columnTypes = resp;
-        console.log("==== repository columnTypes ===", resp.columnTypes);
       }, (error) => {
         // Handle error
       });
@@ -48,7 +48,6 @@ export class Repository {
         .subscribe((resp: any) => {
         this.isLoaded = true;
         this.mlrStats = resp;
-        console.log("==== repository mlrStats ===", resp.mlrStats);
       }, (error) => {
         // Handle error
       });
