@@ -1,0 +1,14 @@
+<div>
+  <div class="table-responsive, overflow-auto">
+    <table id="analysTable2" class="display" width="100%">
+    </table>
+  </div>
+  <button class="btn btn-primary" (click)=" initPython()" style="margin-right: 10px "
+          [disabled]="this.repo.isPythonInit">
+    Init Python
+  </button>
+  <button class="btn btn-primary" (click)="create_table()"
+          [disabled]="!this.repo.isPythonInit || this.hTable">
+    View Data
+  </button>
+</div>
