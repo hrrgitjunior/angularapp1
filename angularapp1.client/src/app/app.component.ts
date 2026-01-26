@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from "./models/navigation.service";
 
 interface WeatherForecast {
   date: string;
@@ -16,32 +17,17 @@ interface WeatherForecast {
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private navigServ: NavigationService) {
+  }
 
   ngOnInit() {
-    this.getForecasts();
+    
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  setCategory(category: string) {
+    this.navigServ.currentCategory = category;
   }
 
-  testo_struct() {
-    this.http.post<string>('/api/testpyspace/testostruct', {}, {}).subscribe(
-      (result) => {
-        console.log("======", result);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
   title = 'angularapp1.client';
 }

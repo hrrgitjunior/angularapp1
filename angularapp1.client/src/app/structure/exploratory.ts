@@ -3,6 +3,8 @@ import { NgModule } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Repository } from "../models/repository";
+import { BasicDataStore } from '../models/stateService';
+import { inject } from '@angular/core';
 
 
 
@@ -13,6 +15,7 @@ import { Repository } from "../models/repository";
 })
 
 export class ExploratoryComponent {
+  private dataStore = inject(BasicDataStore);
 
   constructor(
     private repo: Repository,
@@ -26,8 +29,8 @@ export class ExploratoryComponent {
     //return this.repo.products;
   }
 
-  get corr_image_url(): any {
-    return this.repo.corr_image_url;
+  public downloaded_plot_url(plotId: string): any {
+    return this.dataStore.getInPlotUrls(plotId);
   }
 
   public get_exploratory_columns() {
@@ -36,6 +39,16 @@ export class ExploratoryComponent {
 
   get isLoaded(): boolean {
     return this.repo.isLoaded;
+  }
+
+  public set_to_state() {
+    this.dataStore.updateInState(['analysis', 'corrPlot'], "TEST ASSIGN IN");
+  }
+
+  public get_from_state() {
+    let corrPlot = this.dataStore.getInPlotUrls('corrPlot');
+    console.log("CORR PLOTS ===", corrPlot);
+    console.log("=== GET FROM STATE ===", this.dataStore.baseState);
   }
 
 }

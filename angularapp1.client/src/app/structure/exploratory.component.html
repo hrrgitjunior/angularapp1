@@ -14,22 +14,28 @@
         </td>
       </tr>
     </table>
-    </div>
-   <!-- {{corr_image_url}}-->
+  </div>
+  <!-- {{corr_image_url}}-->
   <!--  <img src={{corr_image_url}} /> -->
 
-    <!-- <button type="button" class="btn btn-primary" (click)="get_mlr_stats()">Get MLR Stats</button> -->
-  </div>
+<button type="button" class="btn btn-primary" (click)="set_to_state()">Set To State</button>
+<button type="button" class="btn btn-primary" (click)="get_from_state()">Get From State</button>
+</div>
 <div class="row">
-  <div class="col col-lg-6">
-    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/corr" plotTitle="Correlation Plot"></plot-frame>
+    <div class="col col-lg-6">
+  <!--  <plot-frame plotUrl="https://severe-regular-fun.anvil.app/corr" plotTitle="Correlation Plot"></plot-frame>-->
+        <plot-frame plotTitle="Correlation Plot" plotName = "corr.jpg"
+                    plotId = "corrPlot" pythonUrl ="https://severe-regular-fun.anvil.app/corr">
+        </plot-frame>
   </div>
 
   <div class="col col-lg-6">
-    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/UPV_COD/CO1_NEC" plotTitle="Relationship UPV_NEC and UPV_COD"></plot-frame>
-    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/CO1_PEK/CO1_NEC" plotTitle="Relationship CO1_NEC and CO1_PEK"></plot-frame>
-    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/Week/CO1_NEC" plotTitle="Relationship UPV_NEC and Week"></plot-frame>
-
+    <plot-frame plotTitle="Relationship UPV_NEC and UPV_COD" plotTitle="Relationship UPV_NEC and UPV_COD" plotName = "regress1.jpg"
+                plotId = 'regr1'
+                pythonUrl = "https://severe-regular-fun.anvil.app/regr/UPV_COD/CO1_NEC" >
+    </plot-frame>
+<!--    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/CO1_PEK/CO1_NEC" plotTitle="Relationship CO1_NEC and CO1_PEK"></plot-frame>
+    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/Week/CO1_NEC" plotTitle="Relationship UPV_NEC and Week"></plot-frame>-->
   </div>
 
 </div>

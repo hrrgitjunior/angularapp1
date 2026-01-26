@@ -2,9 +2,18 @@ import { Injectable } from "@angular/core";
 //import { Http, Headers, RequestMethod, Request, Response } from "@angular/http";
 //import { ResponseContentType } from '@angular/http';
 import { HttpClient, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
+import { BasicDataStore } from '../models/stateService';
+import { inject } from '@angular/core';
 
-@Injectable()
+
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class Repository {
+  private dataStore = inject(BasicDataStore);
+
   tableColumns: any;
   columnTypes: any;
   corr_image_url: string = "";
@@ -12,7 +21,15 @@ export class Repository {
   imgUrl: any;
   mlrStats: any;
   isPythonInit: boolean = false;
+  analysUrls = new Map([
+    ['p1', ''],
+    ['p2', ''],
+  ]);
+  
+  
 
+ // https://localhost:7240/corr.jpg
+  
   constructor(private http: HttpClient) {
   }
 
@@ -54,7 +71,7 @@ export class Repository {
   }
 
   //TO DO
-  download_plot() {
+ /* download_plot() {
     this.http
       .post('/api/exploratory/DownloadPlot', {}, {})
       .subscribe((resp: any) => {
@@ -62,7 +79,18 @@ export class Repository {
       }, (error) => {
         // Handle error
       });
+  }*/
+
+  download_plot(plotId: string, plotData: any) {
+    this.http
+      .post('/api/analysis/GetPlot', plotData, {})
+      .subscribe((resp: any) => {
+        this.isLoaded = true;
+        this.dataStore.updateInPlotUrls(plotId, resp.plotUrl);
+      }, (error) => {
+        // Handle error
+      });
   }
 
-  
+   
 }

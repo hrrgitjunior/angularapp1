@@ -74,7 +74,6 @@ export class AnalysisLayoutComponent {
           'className': 'dt-body-center'
         }],
         ajax: (dataTablesParameters: any, callback: any) => {
-          dataTablesParameters.filter = { field: "week", value: 10 };
           console.log("AJAX PARAMS ===", dataTablesParameters);
           that.http
             .post<any>('/api/analysis', dataTablesParameters, {})
@@ -125,7 +124,7 @@ export class AnalysisLayoutComponent {
   }
 
   download_plot(): void {
-    this.repo.download_plot();
+    this.repo.download_plot('corrPlot', {});
   }
 
   get isLoaded(): boolean {

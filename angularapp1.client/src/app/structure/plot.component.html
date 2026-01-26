@@ -5,8 +5,8 @@
   <div class="card-body">
     <div *ngIf="!isLoadedPlot" class="loader" style="margin: auto"></div>
     <div class="overflow-auto">
-      <img *ngIf="enableViewPlot" src={{plotUrl}} (load)="onImageLoad()" style="width:500px; height:500px" />
+     <img  *ngIf="isValidUrl" src={{plotUrl}} (load)="onImageLoad()" style="width:500px; height:500px" />
     </div>
-    <button *ngIf="!enableViewPlot" (click)="enable_view_plot()" class="btn btn-primary">View</button>
+    <button *ngIf="!isValidUrl" (click)="enable_view_plot()" class="btn btn-primary">View</button>
   </div>
 </div>

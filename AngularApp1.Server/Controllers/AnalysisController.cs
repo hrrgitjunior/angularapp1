@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using Newtonsoft.Json;
+using System;
+using System.Data;
 using System.Data;
 using System.Data.Common;
 using System.IO;
 using System.Net.Http;
+using AngularApp1.Server.Models;
 
 
 namespace AngularApp1.Server.Controllers
@@ -93,5 +95,23 @@ namespace AngularApp1.Server.Controllers
              return Ok(regrStat);
         }
 
-    }// class
- } // namespace3
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<IActionResult> GetPlot([FromBody] PlotSpec plotSpec)
+        {
+            string plotUrl = plotSpec.PlotUrl;
+            string fileName = plotSpec.PlotName;
+
+            using HttpClient client = new();
+            //byte[] fileBytes = await client.GetByteArrayAsync("https://severe-regular-fun.anvil.app/corr");
+            byte[] fileBytes = await client.GetByteArrayAsync(plotUrl);
+            // string fileName = "corr.jpg";
+            string fullPath = Path.Combine("ClientApp/", fileName);
+            
+            await System.IO.File.WriteAllBytesAsync(fullPath, fileBytes);
+            var baseUri = "https://localhost:7240/";
+            
+            return Ok(new { plotUrl = baseUri + fileName });
+        }
+    }
+ }
