@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -21,6 +22,9 @@ namespace AngularApp1.Server.Controllers
             public int draw { get; set; }
             public int start { get; set; }
             public int length { get; set; }
+
+            [Required]
+            public string FileName;
             /*        public List<Column> columns { get; set; }
                     public Search search { get; set; }
                     public Filter filter;*/
@@ -61,11 +65,9 @@ namespace AngularApp1.Server.Controllers
                 dtModel = JsonConvert.DeserializeObject<DataTableAjaxPostModel>(body);
             }
 
-            //return data;
-           // string fullPath = Path.Combine("uploads/", "product_vending_analysis.csv");
-            // var csv_data = this.ReadCSV(fullPath);
-            DataTable dt = ConvertCSVtoDataTable("uploads/product_grouped_by_week_vending_analysis.csv");
-          //  var columnList = dataExpl.GetColumns("uploads/product_vending_analisys.csv");
+            
+          //  DataTable dt = ConvertCSVtoDataTable("uploads/product_grouped_by_week_vending_analysis.csv");
+            DataTable dt = ConvertCSVtoDataTable(dtModel.FileName);
             int numberOfRecords = dt.Rows.Count;
             var csv_page = dt
                         .AsEnumerable()
@@ -78,11 +80,11 @@ namespace AngularApp1.Server.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> GetDTColumns()
+        public async Task<IActionResult> GetDTColumns([FromBody] DTColumnsSpec dtColumnsSpec)
         {
+            string analysType = dtColumnsSpec.AnalysType;
             using HttpClient client = new();
-            var repositories = await client.GetFromJsonAsync<object>("https://severe-regular-fun.anvil.app/columns");
-            //string json = JsonConvert.SerializeObject(new { tableColumns = repositories });
+            var repositories = await client.GetFromJsonAsync<object>("https://severe-regular-fun.anvil.app/columns/" + analysType);
             return Ok(new { tableColumns = repositories });
         }
 
@@ -103,15 +105,16 @@ namespace AngularApp1.Server.Controllers
             string fileName = plotSpec.PlotName;
 
             using HttpClient client = new();
-            //byte[] fileBytes = await client.GetByteArrayAsync("https://severe-regular-fun.anvil.app/corr");
-            byte[] fileBytes = await client.GetByteArrayAsync(plotUrl);
-            // string fileName = "corr.jpg";
-            string fullPath = Path.Combine("ClientApp/", fileName);
             
+            byte[] fileBytes = await client.GetByteArrayAsync(plotUrl);
+            //string fullPath = Path.Combine("ClientApp/", fileName);
+            string fullPath = Path.Combine("wwwroot/", fileName);
+
             await System.IO.File.WriteAllBytesAsync(fullPath, fileBytes);
             var baseUri = "https://localhost:7240/";
             
-            return Ok(new { plotUrl = baseUri + fileName });
+            //return Ok(new { plotUrl = baseUri + fileName });
+            return Ok(new { plotUrl =  fileName });
         }
     }
  }

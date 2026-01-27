@@ -39,7 +39,8 @@ export class BasicDataStore {
 
   public baseState: { [key: string]: any } = {
     'analysis': {
-      'tableColumns': {},
+      'dtColumns': {},
+      'explorColumns': {},
       'regrStat': {},
       'plotUrls': new Map([
           ['corrPlot', ''],
@@ -54,7 +55,7 @@ export class BasicDataStore {
     },
 
     'pca': {
-        'tableColumns': { },
+        'dtColumns': { },
         'pcsPlots': new Map([])
     }
   }

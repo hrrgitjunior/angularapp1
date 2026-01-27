@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Repository } from "../models/repository";
+
 declare var $: any;
 
 
@@ -12,11 +14,15 @@ declare var $: any;
 
 
 export class InitPythonComponent {
+  @Output() initAnalysisPython: EventEmitter<any> = new EventEmitter();
+  @Input() dtColumns: any;
+  @Input() fileName: string = "";
+
   dTable: any = null;
   hTable: any = null;
   jqDataTable: any = null;
   analysisdata: any = null;
-  columns: any;
+  
   isLoadCorr: boolean = false;
   // DataTable = require('datatables.net');
   //dtOptions: DataTables.Settings = {};
@@ -33,8 +39,12 @@ export class InitPythonComponent {
   }
 
   initPython(): void {
-    this.repo.get_dt_columns();
+    this.initAnalysisPython.emit();
   }
+
+/*  initPython(): void {
+    this.repo.get_dt_columns();
+  }*/
 
   public create_table(): void {
     let that = this;
@@ -65,12 +75,13 @@ export class InitPythonComponent {
         }],
         ajax: (dataTablesParameters: any, callback: any) => {
           dataTablesParameters.filter = { field: "week", value: 10 };
+          dataTablesParameters.FileName = this.fileName;
           console.log("AJAX PARAMS ===", dataTablesParameters);
           that.http
             .post<any>('/api/analysis', dataTablesParameters, {})
             .subscribe(resp => {
               that.analysisdata = resp.test;
-              this.columns = this.repo.tableColumns;
+              //this.columns = this.dtC;
 
               callback({
                 recordsTotal: resp.rowNumber,
@@ -78,14 +89,14 @@ export class InitPythonComponent {
                 recordsFiltered: resp.rowNumber, //=> from analysiscontroller
                 //                resp.recordsFiltered,
                 data: resp.data,
-                columns: this.repo.tableColumns
+                columns: this.dtColumns
               });
             });
         },
 
         responsive: true,
         //columns: dataanalys_columns,
-        columns: this.repo.tableColumns,
+        columns: this.dtColumns,
         data: this.analysisdata
 
       });

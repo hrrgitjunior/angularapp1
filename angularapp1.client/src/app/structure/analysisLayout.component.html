@@ -5,13 +5,12 @@
     <table id="analysTable" class="display" width="100%">
     </table>
   </div>
-  <button class="btn btn-primary" (click)=" initPython()" style="margin-right: 10px "
+<!--  <button class="btn btn-primary" (click)=" initPython()" style="margin-right: 10px "
           [disabled]="this.repo.isPythonInit"> Init Python </button>
   <button class="btn btn-primary" (click)="create_table()"
-          [disabled] = "!this.repo.isPythonInit || this.hTable"> View Data </button>
-<!--  <button (click)="upload()">UPLOAD</button>
-  <button (click)="download_plot()">DOWNLOAD PLOT</button>
-  <button (click)="exploratory()">EXPLORATORY</button> -->
+          [disabled] = "!this.repo.isPythonInit || this.hTable"> View Data </button> -->
+  <init-python [dtColumns] = "dtColumns" fileName = "uploads/product_grouped_by_week_vending_analysis.csv"
+               (initAnalysisPython)="initPython()"></init-python>
   <ngx-tabs>
     <ngx-tab [title]="'Exploratory'"><exploratory-layout></exploratory-layout></ngx-tab>
     <ngx-tab [title]="'Evaluation'"><model-evaluation></model-evaluation></ngx-tab>

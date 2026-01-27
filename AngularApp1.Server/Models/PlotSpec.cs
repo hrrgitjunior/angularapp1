@@ -10,4 +10,10 @@ namespace AngularApp1.Server.Models
         public string PlotName { get; set; }
 
     }
+
+    public class DTColumnsSpec
+    {
+        [Required]
+        public string AnalysType { get; set; }
+    }
 }

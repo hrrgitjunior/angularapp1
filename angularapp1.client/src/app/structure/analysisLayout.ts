@@ -3,6 +3,8 @@ import { NgModule } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Repository } from "../models/repository";
+import { BasicDataStore } from '../models/stateService';
+import { inject } from '@angular/core';
 declare var $: any;
 
 
@@ -22,6 +24,8 @@ class DataTablesResponse {
 })
 
 export class AnalysisLayoutComponent {
+  private dataStore = inject(BasicDataStore);
+
   dTable: any = null;
   hTable: any = null;
   jqDataTable: any = null;
@@ -43,7 +47,7 @@ export class AnalysisLayoutComponent {
   }
 
   initPython(): void {
-    this.repo.get_dt_columns();
+    this.repo.get_dt_columns("MLR");
   }
 
   public create_table(): void {
@@ -79,7 +83,7 @@ export class AnalysisLayoutComponent {
             .post<any>('/api/analysis', dataTablesParameters, {})
             .subscribe(resp => {
               that.analysisdata = resp.test;
-              this.columns = this.repo.tableColumns;
+            //  this.columns = this.repo.dtColumns;
 
               callback({
                 recordsTotal: resp.rowNumber,
@@ -87,14 +91,14 @@ export class AnalysisLayoutComponent {
                 recordsFiltered: resp.rowNumber, //=> from analysiscontroller
                 //                resp.recordsFiltered,
                 data: resp.data,
-                columns: this.repo.tableColumns
+                columns: this.repo.dtColumns
               });
             });
         },
 
         responsive: true,
         //columns: dataanalys_columns,
-        columns: this.repo.tableColumns,
+        columns: this.repo.dtColumns,
         data: this.analysisdata
 
       });
@@ -133,6 +137,10 @@ export class AnalysisLayoutComponent {
 
   get isPythonInit(): boolean {
     return this.repo.isPythonInit = true;
+  }
+
+  get dtColumns(): any {
+    return this.dataStore.getInState(['analysis', 'dtColumns']);
   }
 
   onImageLoad(): void {

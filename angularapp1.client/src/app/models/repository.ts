@@ -14,7 +14,7 @@ import { inject } from '@angular/core';
 export class Repository {
   private dataStore = inject(BasicDataStore);
 
-  tableColumns: any;
+  dtColumns: any;
   columnTypes: any;
   corr_image_url: string = "";
   isLoaded: boolean = true;
@@ -33,14 +33,24 @@ export class Repository {
   constructor(private http: HttpClient) {
   }
 
-  get_dt_columns() {
+  get_dt_columns(analysType: string) {
     this.isLoaded = false; 
     this.http
-      .post('/api/analysis/GetDTColumns', {}, {})
+      .post('/api/analysis/GetDTColumns', { AnalysType: analysType}, {})
       .subscribe((resp: any) => {
         this.isLoaded = true;
-        this.tableColumns = resp.tableColumns;
+        this.dtColumns = resp.tableColumns;
         this.isPythonInit = true;
+        switch (analysType) {
+          case "MLR": {
+            this.dataStore.updateInState(['analysis', 'dtColumns'], resp.tableColumns);
+            break;
+          }
+          case "PCA": {
+            this.dataStore.updateInState(['pca', 'dtColumns'], resp.tableColumns);
+            break;
+          }
+        }
       }, (error) => {
         // Handle error
       });
