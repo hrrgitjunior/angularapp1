@@ -79,24 +79,26 @@ export class Repository {
         // Handle error
       });
   }
-
-  //TO DO
- /* download_plot() {
-    this.http
-      .post('/api/exploratory/DownloadPlot', {}, {})
-      .subscribe((resp: any) => {
-        this.imgUrl = resp.imgUrl;
-      }, (error) => {
-        // Handle error
-      });
-  }*/
-
+  
   download_plot(plotId: string, plotData: any) {
     this.http
       .post('/api/analysis/GetPlot', plotData, {})
       .subscribe((resp: any) => {
         this.isLoaded = true;
         this.dataStore.updateInPlotUrls(plotId, resp.plotUrl);
+      }, (error) => {
+        // Handle error
+      });
+  }
+
+  get_pca_componets_ratio() {
+    this.http
+      .post('/api/pca/GetPCAComponentsRatio', {}, {})
+      .subscribe((resp: any) => {
+        this.isLoaded = true;
+        console.log("GET PCA COMPONENTS RATION ===", resp);
+        this.dataStore.updateInState(['pca', 'componentsRatio'], resp.componentsRatio)
+        
       }, (error) => {
         // Handle error
       });

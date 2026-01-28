@@ -42,8 +42,20 @@ export class PCALayoutComponent {
     this.repo.get_dt_columns("PCA");
   }
 
+  get isLoaded(): boolean {
+    return this.repo.isLoaded;
+  }
+
   get dtColumns(): any {
     return this.dataStore.getInState(['pca', 'dtColumns']);
+  }
+
+  public get_PCA_components_ratio() {
+    this.repo.get_pca_componets_ratio();
+  }
+
+  public debug() {
+    console.log(this.dataStore);
   }
 
   

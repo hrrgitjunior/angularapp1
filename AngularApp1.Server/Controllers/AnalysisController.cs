@@ -107,14 +107,14 @@ namespace AngularApp1.Server.Controllers
             using HttpClient client = new();
             
             byte[] fileBytes = await client.GetByteArrayAsync(plotUrl);
-            //string fullPath = Path.Combine("ClientApp/", fileName);
-            string fullPath = Path.Combine("wwwroot/", fileName);
+            string fullPath = Path.Combine("ClientApp/", fileName);
+            //string fullPath = Path.Combine("wwwroot/", fileName);
 
             await System.IO.File.WriteAllBytesAsync(fullPath, fileBytes);
             var baseUri = "https://localhost:7240/";
             
-            //return Ok(new { plotUrl = baseUri + fileName });
-            return Ok(new { plotUrl =  fileName });
+            return Ok(new { plotUrl = baseUri + fileName });
+            //return Ok(new { plotUrl =  fileName });
         }
     }
  }

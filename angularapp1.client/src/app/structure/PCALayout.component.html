@@ -1,5 +1,15 @@
 <div style="height: 100%;">
   <h5> PCA </h5>
+  <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
   <init-python [dtColumns]="dtColumns" fileName="uploads/products_quanty_64.csv"
                (initAnalysisPython)="initPython()"></init-python>
+
+  <button type="button" class="btn btn-primary" style="margin-top:50px"
+          (click)="get_PCA_components_ratio()">
+    Get PCA Components Ratio
+  </button>
+  <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
+
+  <button (click) = "debug()">debug</button>
+ 
 </div>

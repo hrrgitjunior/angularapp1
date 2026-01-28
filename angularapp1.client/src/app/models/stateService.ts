@@ -55,8 +55,9 @@ export class BasicDataStore {
     },
 
     'pca': {
-        'dtColumns': { },
-        'pcsPlots': new Map([])
+      'dtColumns': {},
+      'componentsRatio': {},
+      'pcsPlots': new Map([])
     }
   }
 

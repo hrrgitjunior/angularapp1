@@ -26,7 +26,6 @@ export class ExploratoryComponent {
 
   get columnTypes(): any {
     return this.repo.columnTypes
-    //return this.repo.products;
   }
 
   public downloaded_plot_url(plotId: string): any {
