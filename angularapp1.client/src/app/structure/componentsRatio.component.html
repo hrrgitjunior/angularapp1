@@ -1,0 +1,20 @@
+<div>
+  <button type="button" class="btn btn-primary" (click)="get_PCA_components_ratio()">Get Components Ratio</button>
+  <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
+  <div class="overflow-auto">
+  <table class="table table-bordered" *ngIf="componentsRatio?.length > 0" style="margin-top:20px">
+      <tr>
+        <th> Variance Ratio </th>
+        <th> Variance Cumulative </th>
+      </tr>
+      <tr *ngFor="let cr of componentsRatio">
+        <td>
+          {{cr.var_ratio}}
+        </td>
+        <td>
+          {{cr.var_cumulative}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
