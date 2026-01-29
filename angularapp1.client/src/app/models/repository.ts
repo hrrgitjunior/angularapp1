@@ -44,10 +44,12 @@ export class Repository {
         switch (analysType) {
           case "MLR": {
             this.dataStore.updateInState(['analysis', 'dtColumns'], resp.tableColumns);
+            this.dataStore.updateInState(['analysis', 'isPythonInit'], true);
             break;
           }
           case "PCA": {
             this.dataStore.updateInState(['pca', 'dtColumns'], resp.tableColumns);
+            this.dataStore.updateInState(['pca', 'isPythonInit'], true);
             break;
           }
         }

@@ -9,7 +9,10 @@
           [disabled]="this.repo.isPythonInit"> Init Python </button>
   <button class="btn btn-primary" (click)="create_table()"
           [disabled] = "!this.repo.isPythonInit || this.hTable"> View Data </button> -->
-  <init-python [dtColumns] = "dtColumns" fileName = "uploads/product_grouped_by_week_vending_analysis.csv"
+  <init-python [dtColumns] = "dtColumns"
+               [isPythonInit] = "isPythonInit"
+               fileName = "uploads/product_grouped_by_week_vending_analysis.csv"
+               analysisTyep = "MLR"
                (initAnalysisPython)="initPython()"></init-python>
   <ngx-tabs>
     <ngx-tab [title]="'Exploratory'"><exploratory-layout></exploratory-layout></ngx-tab>

@@ -136,7 +136,7 @@ export class AnalysisLayoutComponent {
   }
 
   get isPythonInit(): boolean {
-    return this.repo.isPythonInit = true;
+    return this.dataStore.getInState(['analysis', 'isPythonInit']);
   }
 
   get dtColumns(): any {

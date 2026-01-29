@@ -3,31 +3,6 @@ import {Injectable} from '@angular/core';
 
 export class BasicDataStore {
   
-  private data: string[] = [];
-  private analysUrls = new Map([
-    ['p1', ''],
-    ['p2', ''],
-  ]);
-
-  addData(item: string): void {
-    this.data.push(item);
-  }
-  getData(): string[] {
-    return [...this.data];
-  }
-
-  addAnalysUrl(key: string, url: string): void {
-    this.analysUrls.set(key, url); 
-  }
-
-  getAnalysUrls(): any {
-    return [...this.analysUrls];
-  }
-
-  getAnalysUrl(key: string): any {
-    return this.analysUrls.get(key);
-  }
-
   getFirst(coll: any[]): any {
     return coll[0];
   }
@@ -39,6 +14,7 @@ export class BasicDataStore {
 
   public baseState: { [key: string]: any } = {
     'analysis': {
+      'isPythonInit': false,
       'dtColumns': {},
       'explorColumns': {},
       'regrStat': {},
@@ -55,6 +31,7 @@ export class BasicDataStore {
     },
 
     'pca': {
+      'isPythonInit': false,
       'dtColumns': {},
       'componentsRatio': [],
       'plotUrls': new Map([
@@ -64,7 +41,7 @@ export class BasicDataStore {
     }
   }
 
-  private assignIn(obj: any, keys: string[], val: string): void {
+  private assignIn(obj: any, keys: string[], val: any): void {
     let key: string = this.getFirst(keys);
     if (keys.length == 1) {
       obj[key] = val;
@@ -74,7 +51,7 @@ export class BasicDataStore {
     }
   }
 
-  public updateInState(keys: string[], val: string): void {
+  public updateInState(keys: string[], val: any): void {
     this.assignIn(this.baseState, keys, val);
     
   }

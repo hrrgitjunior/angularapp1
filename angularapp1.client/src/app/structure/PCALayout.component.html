@@ -2,12 +2,14 @@
   <h5> PCA </h5>
   <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
   <init-python [dtColumns]="dtColumns" fileName="uploads/products_quanty_64.csv"
+               [isPythonInit] = "isPythonInit"
+               analysisType = "PCA"
                (initAnalysisPython)="initPython()"></init-python>
 
 
   <ngx-tabs>
     <ngx-tab [title]="'Commponents Ratio'"><components-ratio></components-ratio></ngx-tab>
-    <ngx-tab [title]="'PCA with Clusering'"><pca-clusters></pca-clusters></ngx-tab>
+    <ngx-tab [title]="'PCA with Clustering'"><pca-clusters></pca-clusters></ngx-tab>
   </ngx-tabs>
 
 

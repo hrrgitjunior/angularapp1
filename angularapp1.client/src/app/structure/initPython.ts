@@ -17,6 +17,7 @@ export class InitPythonComponent {
   @Output() initAnalysisPython: EventEmitter<any> = new EventEmitter();
   @Input() dtColumns: any;
   @Input() fileName: string = "";
+  @Input() isPythonInit: boolean = false;
 
   dTable: any = null;
   hTable: any = null;
@@ -41,10 +42,6 @@ export class InitPythonComponent {
   initPython(): void {
     this.initAnalysisPython.emit();
   }
-
-/*  initPython(): void {
-    this.repo.get_dt_columns();
-  }*/
 
   public create_table(): void {
     let that = this;
@@ -108,9 +105,14 @@ export class InitPythonComponent {
   }
 
   
-  get isPythonInit(): boolean {
-    return this.repo.isPythonInit = true;
-  }
+/*  get isPythonInit(): boolean {
+    switch (this.analysisType) {
+      case "MLR":
+        retrn this.da
+        break;
+    }
+    
+  }*/
 
   
 }

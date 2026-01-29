@@ -50,6 +50,10 @@ export class PCALayoutComponent {
     return this.dataStore.getInState(['pca', 'dtColumns']);
   }
 
+  get isPythonInit(): boolean {
+    return this.dataStore.getInState(['pca', 'isPythonInit']);
+  }
+
   public get_PCA_components_ratio() {
     this.repo.get_pca_componets_ratio();
   }
