@@ -63,6 +63,7 @@ export class Repository {
       .subscribe((resp: any) => {
         this.isLoaded = true;
         this.columnTypes = resp;
+        this.dataStore.updateInState(['analysis', 'explorColumns'], resp)
       }, (error) => {
         // Handle error
       });
@@ -75,6 +76,7 @@ export class Repository {
         .subscribe((resp: any) => {
         this.isLoaded = true;
         this.mlrStats = resp;
+        this.dataStore.updateInState(['analysis', 'regrStat'], resp)
       }, (error) => {
         // Handle error
       });
@@ -85,13 +87,14 @@ export class Repository {
       .post('/api/analysis/GetPlot', plotData, {})
       .subscribe((resp: any) => {
         this.isLoaded = true;
-        this.dataStore.updateInPlotUrls(plotId, resp.plotUrl);
+        this.dataStore.updateInPlotUrls(['analysis', 'plotUrls'], plotId, resp.plotUrl);
       }, (error) => {
         // Handle error
       });
   }
 
   get_pca_componets_ratio() {
+    this.isLoaded = false;
     this.http
       .post('/api/pca/GetPCAComponentsRatio', {}, {})
       .subscribe((resp: any) => {

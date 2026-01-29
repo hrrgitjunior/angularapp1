@@ -2,7 +2,7 @@
   <button type="button" class="btn btn-primary" (click)="get_regression_stat()">Get Regression Statistics</button>
   <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
   <div class="overflow-auto">
-    <table class="table table-bordered" *ngIf="mlrStats" style="margin-top:20px">
+    <table class="table table-bordered" *ngIf="mlrStats?.coeficients?.length > 0" style="margin-top:20px">
       <tr>
         <th> Intercept </th>
         <th *ngFor="let c of mlrStats.coeficients">

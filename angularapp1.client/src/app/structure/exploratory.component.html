@@ -2,7 +2,7 @@
   <button type="button" class="btn btn-primary" (click)="get_exploratory_columns()">Get Exploratory Columns</button>
   <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
   <div class="overflow-auto">
-    <table class="table table-bordered" style="margin-top: 10px">
+    <table *ngIf="columnTypes?.length > 0" class="table table-bordered" style="margin-top: 10px">
       <tr>
         <th *ngFor="let c of columnTypes">
           {{c.column}}
@@ -18,24 +18,29 @@
   <!-- {{corr_image_url}}-->
   <!--  <img src={{corr_image_url}} /> -->
 
-<!--<button type="button" class="btn btn-primary" (click)="set_to_state()">Set To State</button>
-<button type="button" class="btn btn-primary" (click)="get_from_state()">Get From State</button>-->
 </div>
 <div class="row">
     <div class="col col-lg-6">
-  <!--  <plot-frame plotUrl="https://severe-regular-fun.anvil.app/corr" plotTitle="Correlation Plot"></plot-frame>-->
         <plot-frame plotTitle="Correlation Plot" plotName = "corr.jpg"
+                    analysisType = "MLR"
                     plotId = "corrPlot" pythonUrl ="https://severe-regular-fun.anvil.app/corr">
         </plot-frame>
   </div>
 
   <div class="col col-lg-6">
-    <plot-frame plotTitle="Relationship UPV_NEC and UPV_COD" plotTitle="Relationship UPV_NEC and UPV_COD" plotName = "regress1.jpg"
-                plotId = 'regr1'
+    <plot-frame plotTitle="Relationship CO1_NEC and UPV_COD" plotName = "regress1.jpg"
+                plotId = 'regr1' analysisType = "MLR"
                 pythonUrl = "https://severe-regular-fun.anvil.app/regr/UPV_COD/CO1_NEC" >
     </plot-frame>
-<!--    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/CO1_PEK/CO1_NEC" plotTitle="Relationship CO1_NEC and CO1_PEK"></plot-frame>
-    <plot-frame plotUrl="https://severe-regular-fun.anvil.app/regr/Week/CO1_NEC" plotTitle="Relationship UPV_NEC and Week"></plot-frame>-->
+    <plot-frame plotTitle="Relationship CO1_NEC and CO1_PEK" plotName = "regress2.jpg"
+                plotId = 'regr2' analysisType = "MLR"
+                pythonUrl = "https://severe-regular-fun.anvil.app/regr/CO1_PEK/CO1_NEC">
+    </plot-frame>
+    <plot-frame
+                plotTitle="Relationship CO1_NEC and Week" plotName = "regress3.jpg"
+                plotId = 'regr3' analysisType = "MLR"
+                pythonUrl = "https://severe-regular-fun.anvil.app/regr/Week/CO1_NEC">
+     </plot-frame>
   </div>
 
 </div>

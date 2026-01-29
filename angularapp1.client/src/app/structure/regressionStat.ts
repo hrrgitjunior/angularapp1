@@ -3,6 +3,8 @@ import { NgModule } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Repository } from "../models/repository";
+import { BasicDataStore } from '../models/stateService';
+import { inject } from '@angular/core';
 
 
 
@@ -13,6 +15,7 @@ import { Repository } from "../models/repository";
 })
 
 export class RegressionStatComponent {
+   private dataStore = inject(BasicDataStore);
 
   constructor(
     private repo: Repository,
@@ -30,7 +33,8 @@ export class RegressionStatComponent {
   }
 
   get mlrStats(): any {
-    return this.repo.mlrStats;
+    console.log(this.dataStore);
+    return this.dataStore.getInState(['analysis', 'regrStat']);
   }
 
 

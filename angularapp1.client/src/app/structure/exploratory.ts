@@ -16,6 +16,7 @@ import { inject } from '@angular/core';
 
 export class ExploratoryComponent {
   private dataStore = inject(BasicDataStore);
+  
 
   constructor(
     private repo: Repository,
@@ -25,11 +26,12 @@ export class ExploratoryComponent {
   }
 
   get columnTypes(): any {
-    return this.repo.columnTypes
+    return this.dataStore.getInState(['analysis', 'explorColumns']);
   }
 
+ 
   public downloaded_plot_url(plotId: string): any {
-    return this.dataStore.getInPlotUrls(plotId);
+    return this.dataStore.getInPlotUrls(['analysis', 'plotUrls'], plotId);
   }
 
   public get_exploratory_columns() {
@@ -45,7 +47,7 @@ export class ExploratoryComponent {
   }
 
   public get_from_state() {
-    let corrPlot = this.dataStore.getInPlotUrls('corrPlot');
+    let corrPlot = this.dataStore.getInPlotUrls(['analysis', 'plotUrls'], 'corrPlot');
     console.log("CORR PLOTS ===", corrPlot);
     console.log("=== GET FROM STATE ===", this.dataStore.baseState);
   }

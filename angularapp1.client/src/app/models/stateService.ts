@@ -50,14 +50,17 @@ export class BasicDataStore {
           ['regr4', ''],
           ['densPlot', ''],
           ['residPlot1', ''],
-          ['residPlot1', '']
+          ['residPlot2', '']
         ])
     },
 
     'pca': {
       'dtColumns': {},
-      'componentsRatio': {},
-      'pcsPlots': new Map([])
+      'componentsRatio': [],
+      'plotUrls': new Map([
+        ['emblPlot', ''],
+        ['clustersPlot', '']
+      ])
     }
   }
 
@@ -90,14 +93,14 @@ export class BasicDataStore {
       return this.getIn(this.baseState, keys);
   }
 
-  public updateInPlotUrls(plotId: string, plotUrl: string): void {
-    let regrPlots = this.getInState(['analysis', 'plotUrls']);
+  public updateInPlotUrls(statePlotPath:string[], plotId: string, plotUrl: string): void {
+    let regrPlots = this.getInState(statePlotPath);
     regrPlots.set(plotId, plotUrl);
     this.updateInState(['analysis', 'plotUrls'], regrPlots);
   }
 
-  getInPlotUrls(plotId: string): string {
-    let regrPlots = this.getInState(['analysis', 'plotUrls']);
+  getInPlotUrls(statePlotPath: string[], plotId: string): string {
+    let regrPlots = this.getInState(statePlotPath);
     return regrPlots.get(plotId);
   }
 

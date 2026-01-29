@@ -15,6 +15,8 @@ export class PlotComponent {
   @Input() plotTitle: string = "";
   @Input() plotId: string = "";
   @Input() plotName: string = "";
+  @Input() analysisType: string = "";
+
   enableViewPlot: boolean = false;
   isLoadedPlot: boolean = true;
 
@@ -26,9 +28,19 @@ export class PlotComponent {
     return this.repo.isLoaded;
   }
 
-  get plotUrl(): string {
-    return this.dataStore.getInPlotUrls(this.plotId);
-  }
+  get plotUrl(): any {
+    
+    switch (this.analysisType) {
+      case "MLR":
+        return this.dataStore.getInPlotUrls(['analysis', 'plotUrls'], this.plotId);
+        break;
+      case "PCA":
+        return this.dataStore.getInPlotUrls(['pca', 'plotUrls'], this.plotId);
+        break;
+     }
+
+    }
+     
 
   get isValidUrl(): boolean {
     if (!this.plotUrl)

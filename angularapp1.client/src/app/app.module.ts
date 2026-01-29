@@ -12,6 +12,7 @@ import { PlotComponent } from './structure/plot';
 import { RegressionStatComponent } from './structure/regressionStat';
 import { EvaluationComponent } from './structure/evaluation';
 import { InitPythonComponent } from './structure/initPython';
+import { ComponentsRatioComponent } from "./structure/componentsRatio";
 
 import { Repository } from "./models/repository";
 
@@ -33,7 +34,8 @@ import { AppComponent } from './app.component';
     PlotComponent,
     RegressionStatComponent,
     EvaluationComponent,
-    InitPythonComponent
+    InitPythonComponent,
+    ComponentsRatioComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
