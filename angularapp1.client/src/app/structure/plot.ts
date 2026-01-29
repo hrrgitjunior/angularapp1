@@ -56,8 +56,7 @@ export class PlotComponent {
       PlotUrl: this.pythonUrl,
       PlotName: this.plotName
     }
-
-    this.repo.download_plot(this.plotId, plotData);
+    this.repo.download_plot(this.analysisType, this.plotId, plotData);
   }
 
   onImageLoad(): void {

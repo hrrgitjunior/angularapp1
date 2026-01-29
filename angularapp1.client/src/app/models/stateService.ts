@@ -58,8 +58,8 @@ export class BasicDataStore {
       'dtColumns': {},
       'componentsRatio': [],
       'plotUrls': new Map([
-        ['emblPlot', ''],
-        ['clustersPlot', '']
+        ['elbowPlot', ''],
+        ['bpwClusters', '']
       ])
     }
   }

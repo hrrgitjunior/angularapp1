@@ -128,7 +128,7 @@ export class AnalysisLayoutComponent {
   }
 
   download_plot(): void {
-    this.repo.download_plot('corrPlot', {});
+    this.repo.download_plot('MLR', 'corrPlot', {});
   }
 
   get isLoaded(): boolean {

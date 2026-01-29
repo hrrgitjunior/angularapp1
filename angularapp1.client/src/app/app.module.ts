@@ -13,6 +13,8 @@ import { RegressionStatComponent } from './structure/regressionStat';
 import { EvaluationComponent } from './structure/evaluation';
 import { InitPythonComponent } from './structure/initPython';
 import { ComponentsRatioComponent } from "./structure/componentsRatio";
+import { PCAClustersComponent } from "./structure/pcaClusters";
+
 
 import { Repository } from "./models/repository";
 
@@ -35,7 +37,8 @@ import { AppComponent } from './app.component';
     RegressionStatComponent,
     EvaluationComponent,
     InitPythonComponent,
-    ComponentsRatioComponent
+    ComponentsRatioComponent,
+    PCAClustersComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

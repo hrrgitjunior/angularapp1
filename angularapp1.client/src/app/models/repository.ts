@@ -82,12 +82,21 @@ export class Repository {
       });
   }
   
-  download_plot(plotId: string, plotData: any) {
+  download_plot(analysType: string, plotId: string, plotData: any) {
     this.http
       .post('/api/analysis/GetPlot', plotData, {})
       .subscribe((resp: any) => {
         this.isLoaded = true;
-        this.dataStore.updateInPlotUrls(['analysis', 'plotUrls'], plotId, resp.plotUrl);
+        switch (analysType) {
+          case "MLR": {
+            this.dataStore.updateInPlotUrls(['analysis', 'plotUrls'], plotId, resp.plotUrl);
+            break;
+          }
+          case "PCA": {
+            this.dataStore.updateInPlotUrls(['pca', 'plotUrls'], plotId, resp.plotUrl);
+            break;
+          }
+        }
       }, (error) => {
         // Handle error
       });
