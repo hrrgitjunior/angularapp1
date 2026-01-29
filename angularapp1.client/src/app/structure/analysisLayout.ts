@@ -147,5 +147,5 @@ export class AnalysisLayoutComponent {
     this.repo.isLoaded = true;
   }
 
-
+  
 }

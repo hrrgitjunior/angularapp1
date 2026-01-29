@@ -73,7 +73,7 @@ export class BasicDataStore {
   public updateInPlotUrls(statePlotPath:string[], plotId: string, plotUrl: string): void {
     let regrPlots = this.getInState(statePlotPath);
     regrPlots.set(plotId, plotUrl);
-    this.updateInState(['analysis', 'plotUrls'], regrPlots);
+    this.updateInState(statePlotPath, regrPlots);
   }
 
   getInPlotUrls(statePlotPath: string[], plotId: string): string {

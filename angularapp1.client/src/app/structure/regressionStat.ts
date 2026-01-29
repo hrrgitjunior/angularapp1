@@ -33,7 +33,6 @@ export class RegressionStatComponent {
   }
 
   get mlrStats(): any {
-    console.log(this.dataStore);
     return this.dataStore.getInState(['analysis', 'regrStat']);
   }
 
