@@ -84,8 +84,16 @@ namespace AngularApp1.Server.Controllers
         {
             string analysType = dtColumnsSpec.AnalysType;
             using HttpClient client = new();
-            var repositories = await client.GetFromJsonAsync<object>("https://severe-regular-fun.anvil.app/columns/" + analysType);
-            return Ok(new { tableColumns = repositories });
+            try
+            {
+                var repositories = await client.GetFromJsonAsync<object>("https://severe-regular-fun.anvil.app/columns/" + analysType);
+                return Ok(new { tableColumns = repositories });
+            }
+            catch (Exception ex)
+            {
+               return StatusCode(500, ex);
+            }
+
         }
 
         [Route("[action]")]
@@ -106,15 +114,23 @@ namespace AngularApp1.Server.Controllers
 
             using HttpClient client = new();
             
-            byte[] fileBytes = await client.GetByteArrayAsync(plotUrl);
-            string fullPath = Path.Combine("ClientApp/", fileName);
-            //string fullPath = Path.Combine("wwwroot/", fileName);
+            try
+            {
+                byte[] fileBytes = await client.GetByteArrayAsync(plotUrl);
+                //string fullPath = Path.Combine("ClientApp/", fileName);
+                string fullPath = Path.Combine("wwwroot/", fileName);
 
-            await System.IO.File.WriteAllBytesAsync(fullPath, fileBytes);
-            var baseUri = "https://localhost:7240/";
-            
-            return Ok(new { plotUrl = baseUri + fileName });
-            //return Ok(new { plotUrl =  fileName });
+                await System.IO.File.WriteAllBytesAsync(fullPath, fileBytes);
+                var baseUri = "https://localhost:7240/";
+
+                //return Ok(new { plotUrl = baseUri + fileName });
+                return Ok(new { plotUrl = fileName });
+
+            }
+            catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+           
         }
     }
  }

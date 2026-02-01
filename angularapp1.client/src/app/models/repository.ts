@@ -54,7 +54,10 @@ export class Repository {
           }
         }
       }, (error) => {
-        // Handle error
+        this.isLoaded = true;
+        this.isPythonInit = false;
+        alert("Init Plot, throw an exception: " + error.error +" Please, try again.");
+        console.log("ERROR INIT PLOT ===", error.error);
       });
   }
 
@@ -100,7 +103,8 @@ export class Repository {
           }
         }
       }, (error) => {
-        // Handle error
+        alert("Get Plot, throw an exception: " + error.error);
+        console.log("ERROR GET PLOT ===", error.error);
       });
   }
 

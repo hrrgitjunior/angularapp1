@@ -12,15 +12,15 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
 app.UseDefaultFiles();
-//app.UseStaticFiles();//=> onlye deploy!!!
+app.UseStaticFiles();//=> onlye deploy!!!
 //===  only develop mode ===
-app.UseStaticFiles(new StaticFileOptions
+/*app.UseStaticFiles(new StaticFileOptions
 {
     RequestPath = "",
     FileProvider = new PhysicalFileProvider(
                   Path.Combine(Directory.GetCurrentDirectory(),
                   "./ClientApp"))
-});
+});*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
