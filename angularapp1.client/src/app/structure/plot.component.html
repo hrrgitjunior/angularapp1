@@ -3,7 +3,7 @@
     {{plotTitle}}
   </div>
   <div class="card-body">
-    <div *ngIf="!isLoadedPlot" class="loader" style="margin: auto"></div>
+    <div *ngIf="!isLoaded" class="loader" style="margin: auto"></div>
     <div class="overflow-auto">
       <!-- <img  *ngIf="isValidUrl" src={{plotUrl}} (load)="onImageLoad()" style="width:500px; height:500px" /> -->
       <img  *ngIf="isValidUrl" src={{plotUrl}} style="width:500px; height:500px" />

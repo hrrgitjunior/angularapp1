@@ -7,7 +7,8 @@ import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng
 
 @Component({
   selector: "plot-frame",
-  templateUrl: "./plot.component.html"
+  templateUrl: "./plot.component.html",
+   providers: [Repository]
 })
 
 export class PlotComponent {
@@ -26,7 +27,9 @@ export class PlotComponent {
     private modalService: NgbModal) {
   }
 
-  
+  get isLoaded(): boolean {
+    return this.repo.isLoaded;
+  }
   get plotUrl(): any {
     
     switch (this.analysisType) {

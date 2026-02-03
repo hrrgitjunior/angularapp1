@@ -84,6 +84,7 @@ export class Repository {
   }
   
   download_plot(analysType: string, plotId: string, plotData: any, modalService: any) {
+    this.isLoaded = false;
     this.http
       .post('/api/analysis/GetPlot', plotData, {})
       .subscribe((resp: any) => {

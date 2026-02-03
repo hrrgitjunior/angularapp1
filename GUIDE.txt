@@ -1,0 +1,26 @@
+﻿Download image stream from other url:
+
+public class ExploratoryController : ControllerBase
+{
+    [Route("[action]")]
+    [HttpPost]
+    public async Task<IActionResult> DownloadPlot()
+    {
+        using HttpClient client = new();
+        //string json = JsonConvert.SerializeObject(new { tableColumns = repositories });
+        byte[] imageBytes = await client.GetByteArrayAsync("https://severe-regular-fun.anvil.app/corr");
+        int i = 10;
+        return Ok("Ok");
+
+    }
+}
+To be continiue:
+The stream have to save to file and response url to saved files
+
+@Component({
+  selector: "exploratory-layout",
+  templateUrl: "exploratory.component.html",
+  providers: [Repository] ==========> Когато е включен тука чрез providers, 
+то промените в репозитори влияат само за тази компонента, и не се пускат на долу.Без него промените се пускат на долу
+})
+
