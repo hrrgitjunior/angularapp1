@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { BasicDataStore } from '../models/stateService';
 import { inject } from '@angular/core';
-
+import { HttpErrorModalComponent } from "../structure/httpErrorModal";
 
 
 @Injectable({
@@ -21,10 +21,6 @@ export class Repository {
   imgUrl: any;
   mlrStats: any;
   isPythonInit: boolean = false;
-  analysUrls = new Map([
-    ['p1', ''],
-    ['p2', ''],
-  ]);
   
   
 
@@ -33,8 +29,8 @@ export class Repository {
   constructor(private http: HttpClient) {
   }
 
-  get_dt_columns(analysType: string) {
-    this.isLoaded = false; 
+  get_dt_columns(analysType: string, modalService: any) {
+    this.isLoaded = false;
     this.http
       .post('/api/analysis/GetDTColumns', { AnalysType: analysType}, {})
       .subscribe((resp: any) => {
@@ -56,7 +52,7 @@ export class Repository {
       }, (error) => {
         this.isLoaded = true;
         this.isPythonInit = false;
-        alert("Init Plot, throw an exception: " + error.error +" Please, try again.");
+        const modalRef = modalService.open(HttpErrorModalComponent);
         console.log("ERROR INIT PLOT ===", error.error);
       });
   }
@@ -87,7 +83,7 @@ export class Repository {
       });
   }
   
-  download_plot(analysType: string, plotId: string, plotData: any) {
+  download_plot(analysType: string, plotId: string, plotData: any, modalService: any) {
     this.http
       .post('/api/analysis/GetPlot', plotData, {})
       .subscribe((resp: any) => {
@@ -103,7 +99,8 @@ export class Repository {
           }
         }
       }, (error) => {
-        alert("Get Plot, throw an exception: " + error.error);
+        this.isLoaded = true;
+        const modalRef = modalService.open(HttpErrorModalComponent);
         console.log("ERROR GET PLOT ===", error.error);
       });
   }

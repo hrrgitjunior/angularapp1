@@ -5,6 +5,9 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Repository } from "../models/repository";
 import { BasicDataStore } from '../models/stateService';
 import { inject } from '@angular/core';
+import { HttpErrorModalComponent } from "../structure/httpErrorModal";
+import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+
 declare var $: any;
 
 
@@ -38,7 +41,7 @@ export class AnalysisLayoutComponent {
     public repo: Repository,
     private _route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient) {
+    private http: HttpClient, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -47,7 +50,7 @@ export class AnalysisLayoutComponent {
   }
 
   initPython(): void {
-    this.repo.get_dt_columns("MLR");
+    this.repo.get_dt_columns("MLR", this.modalService);
   }
 
   public create_table(): void {
@@ -128,7 +131,7 @@ export class AnalysisLayoutComponent {
   }
 
   download_plot(): void {
-    this.repo.download_plot('MLR', 'corrPlot', {});
+  //  this.repo.download_plot('MLR', 'corrPlot', {}, this.modalService);
   }
 
   get isLoaded(): boolean {
@@ -145,6 +148,11 @@ export class AnalysisLayoutComponent {
 
   onImageLoad(): void {
     this.repo.isLoaded = true;
+  }
+
+  open(): void {
+    console.log("CALL ANALYSIS OPEN MOADL ===")
+    const modalRef = this.modalService.open(HttpErrorModalComponent);
   }
 
   

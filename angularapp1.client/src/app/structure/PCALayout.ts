@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Repository } from "../models/repository";
 import { BasicDataStore } from '../models/stateService';
 import { inject } from '@angular/core';
+import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 declare var $: any;
 
@@ -30,7 +31,8 @@ export class PCALayoutComponent {
     public repo: Repository,
     private _route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class PCALayoutComponent {
   }
 
   initPython(): void {
-    this.repo.get_dt_columns("PCA");
+    this.repo.get_dt_columns("PCA", this.modalService);
   }
 
   get isLoaded(): boolean {

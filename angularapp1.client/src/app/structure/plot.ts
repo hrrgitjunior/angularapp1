@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Repository } from "../models/repository";
 import { BasicDataStore } from '../models/stateService';
 import { inject } from '@angular/core';
+import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -21,13 +22,11 @@ export class PlotComponent {
   isLoadedPlot: boolean = true;
 
   private dataStore = inject(BasicDataStore);
-  constructor(private repo: Repository) {
+  constructor(private repo: Repository,
+    private modalService: NgbModal) {
   }
 
-  get isLoaded(): boolean {
-    return this.repo.isLoaded;
-  }
-
+  
   get plotUrl(): any {
     
     switch (this.analysisType) {
@@ -56,8 +55,9 @@ export class PlotComponent {
       PlotUrl: this.pythonUrl,
       PlotName: this.plotName
     }
-    this.repo.download_plot(this.analysisType, this.plotId, plotData);
+    this.repo.download_plot(this.analysisType, this.plotId, plotData, this.modalService);
   }
+   
 
   onImageLoad(): void {
     console.log("ON IMGAE LOAD");
