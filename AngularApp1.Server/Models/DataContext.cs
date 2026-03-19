@@ -14,6 +14,7 @@ namespace AngularApp1.Server.Models
         public DbSet<RegrStatDb> regrstat { get; set; }
         public DbSet<ExploratoryColumnsDB> exploratorycolumns { get; set; }
         public DbSet<DTColumnsDB> dtcolumns { get; set; }
+        public DbSet<PCAComponentsRatioDB> pcacomponentsratio { get; set; }
 
     }
 }
